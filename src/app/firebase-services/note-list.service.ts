@@ -64,6 +64,7 @@ export class NoteListService {
 
   setNoteObject(obj: any, id: string): Note {
     return {
+      id: id || "",
       type: obj.type || "note",
       title: obj.title || "",
       content: obj.content || "",
