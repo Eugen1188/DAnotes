@@ -43,7 +43,7 @@ export class NoteComponent {
     this.note.type = 'trash';
     let docId = this.note.id;
     delete this.note.id;
-    this.noteService.addNote(this.note, "trash");
+    this.noteService.addNote(this.note);
     this.noteService.deleteNote("notes", docId);
     }
   }

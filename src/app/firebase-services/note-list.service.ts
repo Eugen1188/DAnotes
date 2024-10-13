@@ -16,6 +16,7 @@ export class NoteListService {
   firestore: Firestore = inject(Firestore);
 
   constructor() {
+    console.log(this.getNotesRef())
     this.unsubNotes = this.subNotesList()
     this.unsubTrash = this.subTrashList()
   }
@@ -52,7 +53,7 @@ export class NoteListService {
     }
   }
 
-  async addNote(item: Note, colId: "notes" | "trash") {
+  async addNote(item: Note) {
     await addDoc(this.getNotesRef(), item).catch(
       (err) => { console.error(err) }
     ).then(
@@ -63,7 +64,6 @@ export class NoteListService {
 
   setNoteObject(obj: any, id: string): Note {
     return {
-      id: id,
       type: obj.type || "note",
       title: obj.title || "",
       content: obj.content || "",
@@ -74,6 +74,7 @@ export class NoteListService {
   ngOnDestroy() {
     this.unsubNotes();
     this.unsubTrash();
+
   }
 
   subTrashList() {
@@ -81,6 +82,7 @@ export class NoteListService {
       this.trashNotes = [];
       list.forEach(element => {
         this.trashNotes.push(this.setNoteObject(element.data(), element.id));
+        return element.id;
       });
     });
   }
@@ -89,6 +91,7 @@ export class NoteListService {
     return onSnapshot(this.getNotesRef(), (list) => {
       this.normalNotes = [];
       list.forEach(element => {
+        console.log(element.id);
         this.normalNotes.push(this.setNoteObject(element.data(), element.id));
       });
     });
