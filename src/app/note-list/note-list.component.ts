@@ -23,14 +23,15 @@ export class NoteListComponent {
 
   }
 
-  getList() {
+  getList(): Note[] {
     if(this.status == "trash"){
       return this.noteService.trashNotes;
     }else {
       return this.noteService.normalNotes;
     }
   }
-
+  
+  
 
   changeFavFilter(filter:"all" | "fav"){
     console.log(this.status);

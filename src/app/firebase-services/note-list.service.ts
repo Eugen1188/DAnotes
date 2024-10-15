@@ -53,14 +53,14 @@ export class NoteListService {
     }
   }
 
-  async addNote(item: Note) {
-    await addDoc(this.getNotesRef(), item).catch(
+
+  async addNote(item: Note, colId: "notes" | "trash") {
+    await addDoc(collection(this.firestore, colId), item).catch(
       (err) => { console.error(err) }
     ).then(
       (docRef) => {console.log("Document written with ID: ", docRef?.id);}
     )
   }
-
 
   setNoteObject(obj: any, id: string): Note {
     return {
