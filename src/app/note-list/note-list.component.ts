@@ -7,6 +7,7 @@ import { NoteComponent } from './note/note.component';
 
 
 
+
 @Component({
   selector: 'app-note-list',
   standalone: true,
@@ -18,23 +19,46 @@ export class NoteListComponent {
   noteList: Note[] = [];
   favFilter: "all" | "fav" = "all";
   status: "notes" | "trash" = "notes";
-  
-  constructor(private noteService: NoteListService) {
 
+  constructor(private noteService: NoteListService) {
   }
 
-  getList(): Note[] {
-    if(this.status == "trash"){
-      return this.noteService.trashNotes;
+  // async fillNoteList() {
+
+  //   await this.noteService.subNotesList();
+  //   if (this.noteService.normalNotes) {
+
+  //     console.log(this.status);
+  //     for (let i = 0; i < this.noteService.normalNotes.length; i++) {
+  //       const element = this.noteService.normalNotes[i];
+  //       this.noteList.push(element);
+  //       console.log(element);
+  //     }
+  //   }
+
+  // }
+
+
+
+  getList(status: 'notes' | 'trash'): Note[] {
+    if (status == 'notes') {
+      this.fillNoteList();
+      console.log(this.noteList);
+        return this.noteList;
     }else {
-      return this.noteService.normalNotes;
+        return this.noteService.trashNotes;
+    }
+ }
+
+
+  fillNoteList() {
+    for (let i = 0; i < this.noteService.normalNotes.length; i++) {
+      const element = this.noteService.normalNotes[i];
+      this.noteList.push(element);
     }
   }
-  
-  
 
   changeFavFilter(filter:"all" | "fav"){
-    console.log(this.status);
     this.favFilter = filter;
   }
 
@@ -46,4 +70,7 @@ export class NoteListComponent {
       this.favFilter = "all";
     }
   }
+
+
+
 }
