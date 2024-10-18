@@ -23,40 +23,13 @@ export class NoteListComponent {
   constructor(private noteService: NoteListService) {
   }
 
-  // async fillNoteList() {
-
-  //   await this.noteService.subNotesList();
-  //   if (this.noteService.normalNotes) {
-
-  //     console.log(this.status);
-  //     for (let i = 0; i < this.noteService.normalNotes.length; i++) {
-  //       const element = this.noteService.normalNotes[i];
-  //       this.noteList.push(element);
-  //       console.log(element);
-  //     }
-  //   }
-
-  // }
-
-
-
   getList(status: 'notes' | 'trash'): Note[] {
     if (status == 'notes') {
-      this.fillNoteList();
-      console.log(this.noteList);
-        return this.noteList;
+        return this.noteService.normalNotes;
     }else {
         return this.noteService.trashNotes;
     }
  }
-
-
-  fillNoteList() {
-    for (let i = 0; i < this.noteService.normalNotes.length; i++) {
-      const element = this.noteService.normalNotes[i];
-      this.noteList.push(element);
-    }
-  }
 
   changeFavFilter(filter:"all" | "fav"){
     this.favFilter = filter;
@@ -70,7 +43,4 @@ export class NoteListComponent {
       this.favFilter = "all";
     }
   }
-
-
-
 }
